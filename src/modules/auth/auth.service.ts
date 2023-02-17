@@ -36,32 +36,32 @@ export class AuthService {
     };
   }
 
-  public async create(user) {
-    // hash the password
-    const pass = await this.hashPassword(user.password);
+  // public async create(user) {
+  //   // hash the password
+  //   const pass = await this.hashPassword(user.password);
 
-    // create the user
-    const newUser = await this.userService.create({ ...user, password: pass });
+  //   // create the user
+  //   const newUser = await this.userService.create({ ...user, password: pass });
 
-    // tslint:disable-next-line: no-string-literal
-    const { password, ...result } = newUser['dataValues'];
+  //   // tslint:disable-next-line: no-string-literal
+  //   const { password, ...result } = newUser['dataValues'];
 
-    // generate token
-    const token = await this.generateToken(result);
+  //   // generate token
+  //   const token = await this.generateToken(result);
 
-    // return the user and the token
-    return { user: result, token };
-  }
+  //   // return the user and the token
+  //   return { user: result, token };
+  // }
 
-  private async generateToken(user) {
-    const token = await this.jwtService.signAsync(user);
-    return token;
-  }
+  // private async generateToken(user) {
+  //   const token = await this.jwtService.signAsync(user);
+  //   return token;
+  // }
 
-  private async hashPassword(password) {
-    const hash = await bcrypt.hash(password, 10);
-    return hash;
-  }
+  // private async hashPassword(password) {
+  //   const hash = await bcrypt.hash(password, 10);
+  //   return hash;
+  // }
 
   private async comparePassword(enteredPassword, dbPassword) {
     const match = await bcrypt.compare(enteredPassword, dbPassword);
