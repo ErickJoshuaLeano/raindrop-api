@@ -10,9 +10,11 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async validateUser(username: string, pass: string) {
+  async validateUser(email: string, pass: string) {
     // find if user exist with this email
-    const user = await this.userService.findOneByEmail(username);
+    const user =
+      (await this.userService.findOneByEmail(email)) ||
+      (await this.userService.findOneByUsername(email));
     if (!user) {
       return null;
     }

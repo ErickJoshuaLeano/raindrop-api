@@ -13,6 +13,13 @@ export class User extends Model<User> {
     unique: true,
     allowNull: false,
   })
+  username: string;
+
+  @Column({
+    type: DataType.STRING,
+    unique: true,
+    allowNull: false,
+  })
   email: string;
 
   @Column({
@@ -21,10 +28,10 @@ export class User extends Model<User> {
   })
   password: string;
 
-  @Column({
-    type: DataType.ENUM,
-    values: ['male', 'female'],
-    allowNull: false,
-  })
-  gender: string;
+  // @Column({
+  //   type: DataType.ENUM,
+  //   values: ['male', 'female'],
+  //   allowNull: false,
+  // })
+  // gender: string;
 }
