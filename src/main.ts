@@ -10,13 +10,13 @@ async function bootstrap() {
   // handle all user input validation globally
   app.useGlobalPipes(new ValidateInputPipe());
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Raindrop API')
+    .setDescription('API for Raindrop')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('socialmedia')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+  await app.listen(3001);
 }
 bootstrap();

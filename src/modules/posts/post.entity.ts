@@ -10,11 +10,11 @@ import { User } from '../users/user.entity';
 
 @Table
 export class Post extends Model<Post> {
-  @Column({
-    type: DataType.STRING,
-    allowNull: false,
-  })
-  title: string;
+  // @Column({
+  //   type: DataType.STRING,
+  //   allowNull: false,
+  // })
+  // title: string;
 
   @Column({
     type: DataType.TEXT,
