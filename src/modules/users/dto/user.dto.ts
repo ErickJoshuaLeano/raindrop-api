@@ -5,7 +5,9 @@ import {
   IsEmail,
   Matches,
   IsEnum,
+  IsString,
 } from 'class-validator';
+import { Match } from './match.decorator';
 
 // enum Gender {
 //   MALE = 'male',
@@ -34,6 +36,9 @@ export class UserDto {
   })
   readonly password: string;
 
+  @IsNotEmpty({ message: 'please confirm your password' })
+  @Match('password', { message: 'password does not match' })
+  confirmPassword: string;
   // @IsNotEmpty()
   // @IsEnum(Gender, {
   //   message: 'gender must be either male or female',
