@@ -2,13 +2,16 @@ import { Injectable, Inject } from '@nestjs/common';
 import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
 import { USER_REPOSITORY } from '../../core/constants';
+import { PostsService } from '../posts/posts.service';
 import * as bcrypt from 'bcrypt';
+import { Post } from '../posts/post.entity';
 
 @Injectable()
 export class UsersService {
   constructor(
     @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
   ) {}
+  @Inject(PostsService) private readonly postsService: PostsService;
 
   public async create(user: UserDto) {
     // hash the password
@@ -45,9 +48,22 @@ export class UsersService {
   //   return await this.userRepository.create<User>(user);
   // }
 
+  async findAllSecure(): Promise<User[]> {
+    return await this.userRepository.findAll<User>({
+      attributes: { exclude: ['password'] },
+    });
+  }
+
   async findOneByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: { email },
+    });
+  }
+
+  async findOneByEmailSecure(email: string): Promise<User> {
+    return await this.userRepository.findOne<User>({
+      where: { email },
+      attributes: { exclude: ['password'] },
     });
   }
 
@@ -57,9 +73,28 @@ export class UsersService {
     });
   }
 
+  async findOneByUsernameSecure(username: string): Promise<User> {
+    return await this.userRepository.findOne<User>({
+      where: { username },
+      attributes: { exclude: ['password'] },
+    });
+  }
+
   async findOneById(id: number): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: { id },
     });
+  }
+
+  async findOneByIdSecure(id: number): Promise<User> {
+    return await this.userRepository.findOne<User>({
+      where: { id },
+      attributes: { exclude: ['password'] },
+    });
+  }
+
+  async findPostByUsername(username: string): Promise<Post[]> {
+    const id = (await this.findOneByUsernameSecure(username)).id;
+    return await this.postsService.findByUserId(id);
   }
 }

@@ -20,6 +20,13 @@ export class PostsService {
     });
   }
 
+  async findByUserId(userId): Promise<Post[]> {
+    return await this.postRepository.findAll<Post>({
+      where: { userId },
+      include: [{ model: User, attributes: { exclude: ['password'] } }],
+    });
+  }
+
   async findOne(id): Promise<Post> {
     return await this.postRepository.findOne({
       where: { id },

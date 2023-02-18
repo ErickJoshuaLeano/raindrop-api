@@ -1,4 +1,5 @@
-import { Table, Column, Model, DataType } from 'sequelize-typescript';
+import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Post } from '../posts/post.entity';
 
 @Table
 export class User extends Model<User> {
@@ -28,6 +29,8 @@ export class User extends Model<User> {
   })
   password: string;
 
+  @HasMany(() => Post, 'userId')
+  posts: Post[];
   // @Column({
   //   type: DataType.ENUM,
   //   values: ['male', 'female'],
