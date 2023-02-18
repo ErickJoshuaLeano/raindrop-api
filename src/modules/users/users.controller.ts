@@ -1,4 +1,11 @@
-import { Controller, Body, Post, UseGuards, Request } from '@nestjs/common';
+import {
+  Controller,
+  Body,
+  Post,
+  UseGuards,
+  Request,
+  Get,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
 import { UserDto } from '../users/dto/user.dto';
@@ -12,5 +19,11 @@ export class UsersController {
   @Post()
   async signUp(@Body() user: UserDto) {
     return await this.usersService.create(user);
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Get('me')
+  async findCurrentUser(@Request() req) {
+    return await this.usersService.findOneById(req.user.id);
   }
 }
