@@ -48,21 +48,18 @@ export class UsersService {
   async findOneByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: { email },
-      attributes: { exclude: ['password'] },
     });
   }
 
   async findOneByUsername(username: string): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: { username },
-      attributes: { exclude: ['password'] },
     });
   }
 
   async findOneById(id: number): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: { id },
-      attributes: { exclude: ['password'] },
     });
   }
 }
