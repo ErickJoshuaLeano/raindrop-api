@@ -5,19 +5,12 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
-  HasMany,
 } from 'sequelize-typescript';
 import { User } from '../users/user.entity';
-import { Comment } from '../comments/comment.entity';
+import { Post } from '../posts/post.entity';
 
 @Table
-export class Post extends Model<Post> {
-  // @Column({
-  //   type: DataType.STRING,
-  //   allowNull: false,
-  // })
-  // title: string;
-
+export class Comment extends Model<Comment> {
   @Column({
     type: DataType.TEXT,
     allowNull: false,
@@ -34,6 +27,13 @@ export class Post extends Model<Post> {
   @BelongsTo(() => User)
   user: User;
 
-  @HasMany(() => Comment, 'id')
-  comments: Comment[];
+  @ForeignKey(() => Post)
+  @Column({
+    type: DataType.INTEGER,
+    allowNull: false,
+  })
+  postId: number;
+
+  @BelongsTo(() => Post)
+  post: Post;
 }

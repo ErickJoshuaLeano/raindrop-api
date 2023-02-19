@@ -5,6 +5,7 @@ import { USER_REPOSITORY } from '../../core/constants';
 import { PostsService } from '../posts/posts.service';
 import * as bcrypt from 'bcrypt';
 import { Post } from '../posts/post.entity';
+import { Op, or } from 'sequelize';
 
 @Injectable()
 export class UsersService {
@@ -76,6 +77,26 @@ export class UsersService {
   async findOneByUsernameSecure(username: string): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: { username },
+      attributes: { exclude: ['password'] },
+    });
+  }
+
+  async searchProfilesSecure(query: string): Promise<User[]> {
+    return await this.userRepository.findAll<User>({
+      where: {
+        [Op.or]: [
+          {
+            username: {
+              [Op.iLike]: `%${query}%`,
+            },
+          },
+          {
+            name: {
+              [Op.iLike]: `%${query}%`,
+            },
+          },
+        ],
+      },
       attributes: { exclude: ['password'] },
     });
   }

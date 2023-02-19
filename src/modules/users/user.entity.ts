@@ -29,7 +29,7 @@ export class User extends Model<User> {
   })
   password: string;
 
-  @HasMany(() => Post, 'userId')
+  @HasMany(() => Post, { foreignKey: 'id' })
   posts: Post[];
   // @Column({
   //   type: DataType.ENUM,
