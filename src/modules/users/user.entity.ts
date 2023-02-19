@@ -1,4 +1,5 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
+import { Comment } from '../comments/comment.entity';
 import { Post } from '../posts/post.entity';
 
 @Table
@@ -35,8 +36,11 @@ export class User extends Model<User> {
   })
   profilePicture: string;
 
-  @HasMany(() => Post, { foreignKey: 'id' })
+  @HasMany(() => Post)
   posts: Post[];
+
+  @HasMany(() => Comment)
+  comments: Comment[];
   // @Column({
   //   type: DataType.ENUM,
   //   values: ['male', 'female'],

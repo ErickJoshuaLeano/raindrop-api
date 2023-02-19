@@ -12,8 +12,12 @@ export class CommentsService {
     private readonly commentRepository: typeof Comment,
   ) {}
 
-  async create(comment: CommentDto, userId): Promise<Comment> {
-    return await this.commentRepository.create<Comment>({ ...comment, userId });
+  async create(comment: CommentDto, postId, userId): Promise<Comment> {
+    return await this.commentRepository.create<Comment>({
+      ...comment,
+      postId,
+      userId,
+    });
   }
 
   async findAll(): Promise<Comment[]> {
@@ -28,7 +32,10 @@ export class CommentsService {
   async findOne(id): Promise<Comment> {
     return await this.commentRepository.findOne({
       where: { id },
-      include: [{ model: User, attributes: { exclude: ['password'] } }],
+      include: [
+        { model: Post },
+        { model: User, attributes: { exclude: ['password'] } },
+      ],
     });
   }
 
@@ -44,5 +51,15 @@ export class CommentsService {
       );
 
     return { numberOfAffectedRows, updatedComment };
+  }
+
+  async findAllByPostId(postId): Promise<Comment[]> {
+    return await this.commentRepository.findAll<Comment>({
+      where: { postId: postId },
+      include: [
+        { model: Post },
+        { model: User, attributes: { exclude: ['password'] } },
+      ],
+    });
   }
 }

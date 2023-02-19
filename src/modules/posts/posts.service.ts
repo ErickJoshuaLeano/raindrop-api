@@ -4,12 +4,14 @@ import { PostDto } from './dto/post.dto';
 import { User } from '../users/user.entity';
 import { Comment } from '../comments/comment.entity';
 import { POST_REPOSITORY } from '../../core/constants';
+import { CommentsService } from '../comments/comments.service';
 
 @Injectable()
 export class PostsService {
   constructor(
     @Inject(POST_REPOSITORY) private readonly postRepository: typeof Post,
   ) {}
+  @Inject(CommentsService) private readonly commentsService: CommentsService;
 
   async create(post: PostDto, userId): Promise<Post> {
     return await this.postRepository.create<Post>({ ...post, userId });
@@ -47,5 +49,21 @@ export class PostsService {
       );
 
     return { numberOfAffectedRows, updatedPost };
+  }
+
+  async findAllComments(postId): Promise<Comment[]> {
+    return await this.commentsService.findAllByPostId(postId);
+  }
+
+  async createComment(comment, postId, userId): Promise<Comment> {
+    return await this.commentsService.create(comment, postId, userId);
+  }
+
+  async deleteComment(commentId, userId) {
+    return await this.commentsService.delete(commentId, userId);
+  }
+
+  async findComment(commentId) {
+    return await this.commentsService.findOne(commentId);
   }
 }

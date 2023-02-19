@@ -34,6 +34,6 @@ export class Post extends Model<Post> {
   @BelongsTo(() => User)
   user: User;
 
-  @HasMany(() => Comment, 'id')
+  @HasMany(() => Comment)
   comments: Comment[];
 }
