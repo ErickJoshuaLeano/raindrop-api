@@ -31,6 +31,12 @@ export class Post extends Model<Post> {
   })
   userId: number;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  postPicture: string;
+
   @BelongsTo(() => User)
   user: User;
 

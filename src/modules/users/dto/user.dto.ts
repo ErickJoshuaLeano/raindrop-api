@@ -44,8 +44,8 @@ export class UserDto {
   @Match('password', { message: 'password does not match' })
   confirmPassword: string;
 
-  @IsOptional()
   @IsUrl()
+  @IsOptional()
   readonly profilePicture: string;
   // @IsNotEmpty()
   // @IsEnum(Gender, {

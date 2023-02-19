@@ -1,4 +1,4 @@
-import { IsNotEmpty, MinLength } from 'class-validator';
+import { IsNotEmpty, IsOptional, IsUrl, ValidateIf } from 'class-validator';
 
 export class PostDto {
   // @IsNotEmpty()
@@ -7,4 +7,9 @@ export class PostDto {
 
   @IsNotEmpty()
   readonly body: string;
+
+  @ValidateIf((post) => post.postPicture !== '')
+  @IsUrl()
+  @IsOptional()
+  readonly postPicture: string;
 }
