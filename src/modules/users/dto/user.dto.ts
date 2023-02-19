@@ -6,6 +6,9 @@ import {
   Matches,
   IsEnum,
   IsString,
+  IsOptional,
+  IsUrl,
+  NotContains,
 } from 'class-validator';
 import { Match } from './match.decorator';
 
@@ -22,6 +25,7 @@ export class UserDto {
   @IsNotEmpty()
   @MinLength(5)
   @MaxLength(15)
+  @NotContains(' ', { message: 'username should not have spaces' })
   readonly username: string;
 
   @IsNotEmpty()
@@ -39,6 +43,10 @@ export class UserDto {
   @IsNotEmpty({ message: 'please confirm your password' })
   @Match('password', { message: 'password does not match' })
   confirmPassword: string;
+
+  @IsOptional()
+  @IsUrl()
+  readonly profilePicture: string;
   // @IsNotEmpty()
   // @IsEnum(Gender, {
   //   message: 'gender must be either male or female',

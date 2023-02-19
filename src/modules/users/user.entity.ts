@@ -29,6 +29,12 @@ export class User extends Model<User> {
   })
   password: string;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  profilePicture: string;
+
   @HasMany(() => Post, { foreignKey: 'id' })
   posts: Post[];
   // @Column({

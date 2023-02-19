@@ -57,26 +57,62 @@ export class UsersService {
 
   async findOneByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne<User>({
-      where: { email },
+      where: {
+        [Op.or]: [
+          { email },
+          {
+            email: {
+              [Op.iLike]: email,
+            },
+          },
+        ],
+      },
     });
   }
 
   async findOneByEmailSecure(email: string): Promise<User> {
     return await this.userRepository.findOne<User>({
-      where: { email },
+      where: {
+        [Op.or]: [
+          { email },
+          {
+            email: {
+              [Op.iLike]: email,
+            },
+          },
+        ],
+      },
       attributes: { exclude: ['password'] },
     });
   }
 
   async findOneByUsername(username: string): Promise<User> {
     return await this.userRepository.findOne<User>({
-      where: { username },
+      where: {
+        [Op.or]: [
+          { username },
+          {
+            username: {
+              [Op.iLike]: username,
+            },
+          },
+        ],
+      },
     });
   }
 
   async findOneByUsernameSecure(username: string): Promise<User> {
     return await this.userRepository.findOne<User>({
-      where: { username },
+      where: {
+        [Op.or]: [
+          { username },
+          {
+            username: {
+              [Op.iLike]: username,
+            },
+          },
+        ],
+      },
       attributes: { exclude: ['password'] },
     });
   }
