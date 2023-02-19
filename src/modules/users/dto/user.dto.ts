@@ -9,6 +9,7 @@ import {
   IsOptional,
   IsUrl,
   NotContains,
+  ValidateIf,
 } from 'class-validator';
 import { Match } from './match.decorator';
 
@@ -44,6 +45,7 @@ export class UserDto {
   @Match('password', { message: 'password does not match' })
   confirmPassword: string;
 
+  @ValidateIf((user) => user.profilePicture !== '')
   @IsUrl()
   @IsOptional()
   readonly profilePicture: string;

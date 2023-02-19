@@ -35,6 +35,17 @@ export class UsersService {
     return { user: result };
   }
 
+  async update(data, id) {
+    const pass = await this.hashPassword(data.password);
+    const [numberOfAffectedRows, [updatedUser]] =
+      await this.userRepository.update(
+        { ...data, password: pass },
+        { where: { id }, returning: true },
+      );
+
+    return { numberOfAffectedRows, updatedUser };
+  }
+
   // private async generateToken(user) {
   //   const token = await this.jwtService.signAsync(user);
   //   return token;
