@@ -4,6 +4,7 @@ import { CommentDto } from './dto/comment.dto';
 import { Post } from '../posts/post.entity';
 import { User } from '../users/user.entity';
 import { COMMENT_REPOSITORY } from '../../core/constants';
+import { Like } from '../likes/like.entity';
 
 @Injectable()
 export class CommentsService {
@@ -25,6 +26,7 @@ export class CommentsService {
       include: [
         { model: Post },
         { model: User, attributes: { exclude: ['password'] } },
+        { model: Like },
       ],
     });
   }
@@ -35,6 +37,7 @@ export class CommentsService {
       include: [
         { model: Post },
         { model: User, attributes: { exclude: ['password'] } },
+        { model: Like },
       ],
     });
   }
@@ -59,6 +62,7 @@ export class CommentsService {
       include: [
         { model: Post },
         { model: User, attributes: { exclude: ['password'] } },
+        { model: Like },
       ],
     });
   }

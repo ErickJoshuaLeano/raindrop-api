@@ -5,6 +5,7 @@ import { User } from '../users/user.entity';
 import { Comment } from '../comments/comment.entity';
 import { POST_REPOSITORY } from '../../core/constants';
 import { CommentsService } from '../comments/comments.service';
+import { Like } from '../likes/like.entity';
 
 @Injectable()
 export class PostsService {
@@ -19,21 +20,30 @@ export class PostsService {
 
   async findAll(): Promise<Post[]> {
     return await this.postRepository.findAll<Post>({
-      include: [{ model: User, attributes: { exclude: ['password'] } }],
+      include: [
+        { model: User, attributes: { exclude: ['password'] } },
+        { model: Like },
+      ],
     });
   }
 
   async findByUserId(userId): Promise<Post[]> {
     return await this.postRepository.findAll<Post>({
       where: { userId },
-      include: [{ model: User, attributes: { exclude: ['password'] } }],
+      include: [
+        { model: User, attributes: { exclude: ['password'] } },
+        { model: Like },
+      ],
     });
   }
 
   async findOne(id): Promise<Post> {
     return await this.postRepository.findOne({
       where: { id },
-      include: [{ model: User, attributes: { exclude: ['password'] } }],
+      include: [
+        { model: User, attributes: { exclude: ['password'] } },
+        { model: Like },
+      ],
     });
   }
 

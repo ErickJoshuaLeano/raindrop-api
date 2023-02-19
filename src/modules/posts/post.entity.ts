@@ -9,6 +9,7 @@ import {
 } from 'sequelize-typescript';
 import { User } from '../users/user.entity';
 import { Comment } from '../comments/comment.entity';
+import { Like } from '../likes/like.entity';
 
 @Table
 export class Post extends Model<Post> {
@@ -42,4 +43,7 @@ export class Post extends Model<Post> {
 
   @HasMany(() => Comment)
   comments: Comment[];
+
+  @HasMany(() => Like)
+  likes: Like[];
 }

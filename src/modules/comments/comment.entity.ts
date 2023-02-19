@@ -5,9 +5,11 @@ import {
   DataType,
   ForeignKey,
   BelongsTo,
+  HasMany,
 } from 'sequelize-typescript';
 import { User } from '../users/user.entity';
 import { Post } from '../posts/post.entity';
+import { Like } from '../likes/like.entity';
 
 @Table
 export class Comment extends Model<Comment> {
@@ -36,4 +38,7 @@ export class Comment extends Model<Comment> {
 
   @BelongsTo(() => Post)
   post: Post;
+
+  @HasMany(() => Like)
+  likes: Like[];
 }

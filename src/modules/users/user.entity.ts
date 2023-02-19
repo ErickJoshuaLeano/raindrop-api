@@ -1,6 +1,7 @@
 import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
 import { Comment } from '../comments/comment.entity';
 import { Post } from '../posts/post.entity';
+import { Like } from '../likes/like.entity';
 
 @Table
 export class User extends Model<User> {
@@ -41,6 +42,9 @@ export class User extends Model<User> {
 
   @HasMany(() => Comment)
   comments: Comment[];
+
+  @HasMany(() => Like)
+  likes: Like[];
   // @Column({
   //   type: DataType.ENUM,
   //   values: ['male', 'female'],
