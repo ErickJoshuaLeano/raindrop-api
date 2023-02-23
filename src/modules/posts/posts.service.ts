@@ -20,6 +20,7 @@ export class PostsService {
 
   async findAll(): Promise<Post[]> {
     return await this.postRepository.findAll<Post>({
+      order: [['id', 'DESC']],
       include: [
         { model: User, attributes: { exclude: ['password'] } },
         { model: Like },
@@ -30,6 +31,7 @@ export class PostsService {
   async findByUserId(userId): Promise<Post[]> {
     return await this.postRepository.findAll<Post>({
       where: { userId },
+      order: [['id', 'DESC']],
       include: [
         { model: User, attributes: { exclude: ['password'] } },
         { model: Like },
