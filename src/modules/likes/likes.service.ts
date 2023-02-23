@@ -34,4 +34,14 @@ export class LikesService {
       include: [{ model: Post }],
     });
   }
+
+  async findAll(): Promise<Like[]> {
+    return await this.likeRepository.findAll<Like>({
+      order: [['id', 'DESC']],
+    });
+  }
+
+  async delete(id, userId) {
+    return await this.likeRepository.destroy({ where: { id, userId } });
+  }
 }
