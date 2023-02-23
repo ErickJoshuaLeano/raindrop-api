@@ -4,9 +4,10 @@ import { usersProviders } from './users.providers';
 import { UsersController } from './users.controller';
 import { ProfilesController } from './users.controller';
 import { PostsModule } from '../posts/posts.module';
+import { LikesModule } from '../likes/likes.module';
 
 @Module({
-  imports: [PostsModule],
+  imports: [PostsModule, LikesModule],
   providers: [UsersService, ...usersProviders],
   exports: [UsersService],
   controllers: [UsersController, ProfilesController],

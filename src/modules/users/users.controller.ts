@@ -74,4 +74,9 @@ export class ProfilesController {
   async findProfilePosts(@Param('username') username: string) {
     return await this.usersService.findPostByUsername(username);
   }
+
+  @Get(':username/likes')
+  async findProfileLikes(@Param('username') username: string) {
+    return await this.usersService.findLikesByUsername(username);
+  }
 }

@@ -3,9 +3,11 @@ import { User } from './user.entity';
 import { UserDto } from './dto/user.dto';
 import { USER_REPOSITORY } from '../../core/constants';
 import { PostsService } from '../posts/posts.service';
+import { LikesService } from '../likes/likes.service';
 import * as bcrypt from 'bcrypt';
 import { Post } from '../posts/post.entity';
 import { Op, or } from 'sequelize';
+import { Like } from '../likes/like.entity';
 
 @Injectable()
 export class UsersService {
@@ -13,6 +15,7 @@ export class UsersService {
     @Inject(USER_REPOSITORY) private readonly userRepository: typeof User,
   ) {}
   @Inject(PostsService) private readonly postsService: PostsService;
+  @Inject(LikesService) private readonly likesService: LikesService;
 
   public async create(user: UserDto) {
     // hash the password
@@ -164,5 +167,10 @@ export class UsersService {
   async findPostByUsername(username: string): Promise<Post[]> {
     const id = (await this.findOneByUsernameSecure(username)).id;
     return await this.postsService.findByUserId(id);
+  }
+
+  async findLikesByUsername(username: string): Promise<Like[]> {
+    const id = (await this.findOneByUsernameSecure(username)).id;
+    return await this.likesService.findByUserId(id);
   }
 }
