@@ -37,6 +37,12 @@ export class User extends Model<User> {
   })
   profilePicture: string;
 
+  @Column({
+    type: DataType.STRING,
+    allowNull: true,
+  })
+  coverPicture: string;
+
   @HasMany(() => Post)
   posts: Post[];
 

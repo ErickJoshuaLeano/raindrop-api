@@ -49,6 +49,16 @@ export class UsersService {
     return { numberOfAffectedRows, updatedUser };
   }
 
+  async updateNoPass(data, id) {
+    const [numberOfAffectedRows, [updatedUser]] =
+      await this.userRepository.update(
+        { ...data },
+        { where: { id }, returning: true },
+      );
+
+    return { numberOfAffectedRows, updatedUser };
+  }
+
   // private async generateToken(user) {
   //   const token = await this.jwtService.signAsync(user);
   //   return token;

@@ -5,6 +5,7 @@ import {
   UseGuards,
   Request,
   Get,
+  Patch,
   Param,
   Query,
   Put,
@@ -14,6 +15,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { UsersService } from './users.service';
 import { User as UserEntity } from './user.entity';
 import { UserDto } from '../users/dto/user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { DoesUserExist } from '../../core/guards/doesUserExist.guard';
 import SearchUsersQuery from './searchUsersQuery';
 
@@ -33,6 +35,26 @@ export class UsersController {
     // get the number of row affected and the updated post
     const { numberOfAffectedRows, updatedUser } =
       await this.usersService.update(user, req.user.id);
+
+    // if the number of row affected is zero,
+    // it means the user doesn't exist in our db
+    if (numberOfAffectedRows === 0) {
+      throw new NotFoundException("This User doesn't exist");
+    }
+
+    // return the updated user
+    return updatedUser;
+  }
+
+  @UseGuards(AuthGuard('jwt'))
+  @Patch()
+  async updateNoPass(
+    @Body() user: UpdateUserDto,
+    @Request() req,
+  ): Promise<UserEntity> {
+    // get the number of row affected and the updated post
+    const { numberOfAffectedRows, updatedUser } =
+      await this.usersService.updateNoPass(user, req.user.id);
 
     // if the number of row affected is zero,
     // it means the user doesn't exist in our db
