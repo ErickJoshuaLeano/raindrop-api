@@ -78,4 +78,8 @@ export class PostsService {
   async findComment(commentId) {
     return await this.commentsService.findOne(commentId);
   }
+
+  async updateComment(commentId, comment, userId) {
+    return await this.commentsService.update(commentId, comment, userId);
+  }
 }

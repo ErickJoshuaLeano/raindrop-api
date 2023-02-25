@@ -110,6 +110,26 @@ export class PostsController {
     return this.postService.findAllComments(id);
   }
 
+  @Put(':id/comments/:commentId')
+  async updateComment(
+    @Param('commentId') commentId: number,
+    @Body() comment: CommentDto,
+    @Request() req,
+  ): Promise<CommentEntity> {
+    // get the number of row affected and the updated post
+    const { numberOfAffectedRows, updatedComment } =
+      await this.postService.updateComment(commentId, comment, req.user.id);
+
+    // if the number of row affected is zero,
+    // it means the post doesn't exist in our db
+    if (numberOfAffectedRows === 0) {
+      throw new NotFoundException("This Comment doesn't exist");
+    }
+
+    // return the updated post
+    return updatedComment;
+  }
+
   @Get(':id/comments/:commentId')
   async findComment(
     @Param('commentId') commentId: number,
