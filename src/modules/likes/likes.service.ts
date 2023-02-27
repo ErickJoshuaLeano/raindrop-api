@@ -68,7 +68,6 @@ export class LikesService {
     const queryResult = await this.likeRepository.findAll<Like>({
       where: { userId, commentId },
     });
-    console.log(queryResult);
     return queryResult;
   }
 }
