@@ -28,7 +28,7 @@ export class DoesUserExist implements CanActivate {
     if (userEmailExist) {
       throw new ForbiddenException('This email already exists');
     } else if (userUsernameExist) {
-      throw new ForbiddenException('This username is laready taken');
+      throw new ForbiddenException('This username is already taken');
     }
     return true;
   }
