@@ -9,7 +9,7 @@ import { LikesModule } from '../likes/likes.module';
 @Module({
   imports: [PostsModule, LikesModule],
   providers: [UsersService, ...usersProviders],
-  exports: [UsersService],
+  exports: [UsersService, UsersModule],
   controllers: [UsersController, ProfilesController],
 })
 export class UsersModule {}
