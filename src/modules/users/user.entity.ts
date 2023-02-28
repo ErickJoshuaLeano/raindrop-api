@@ -2,6 +2,7 @@ import { Table, Column, Model, DataType, HasMany } from 'sequelize-typescript';
 import { Comment } from '../comments/comment.entity';
 import { Post } from '../posts/post.entity';
 import { Like } from '../likes/like.entity';
+import { Following } from '../following/following.entity';
 
 @Table
 export class User extends Model<User> {
@@ -51,10 +52,7 @@ export class User extends Model<User> {
 
   @HasMany(() => Like)
   likes: Like[];
-  // @Column({
-  //   type: DataType.ENUM,
-  //   values: ['male', 'female'],
-  //   allowNull: false,
-  // })
-  // gender: string;
+
+  @HasMany(() => Following)
+  following: Following[];
 }

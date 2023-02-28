@@ -79,6 +79,13 @@ export class UsersService {
     });
   }
 
+  async findAllByIdSecure(id): Promise<User[]> {
+    return await this.userRepository.findAll<User>({
+      where: { id },
+      attributes: { exclude: ['password'] },
+    });
+  }
+
   async findOneByEmail(email: string): Promise<User> {
     return await this.userRepository.findOne<User>({
       where: {
