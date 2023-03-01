@@ -8,6 +8,7 @@ import { LIKE_REPOSITORY } from 'src/core/constants';
 import { LikeDto } from './dto/like.dto';
 import { Like } from './like.entity';
 import { Post } from '../posts/post.entity';
+import { User } from '../users/user.entity';
 
 @Injectable()
 export class LikesService {
@@ -61,6 +62,13 @@ export class LikesService {
   async findOnePost(userId, postId): Promise<Like[]> {
     return await this.likeRepository.findAll<Like>({
       where: { userId, postId },
+    });
+  }
+
+  async findByUser(userId): Promise<Like[]> {
+    return await this.likeRepository.findAll<Like>({
+      where: { userId },
+      include: [{ model: Post, include: [{ model: User }, { model: Like }] }],
     });
   }
 

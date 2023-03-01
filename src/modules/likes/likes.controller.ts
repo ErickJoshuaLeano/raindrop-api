@@ -25,6 +25,12 @@ export class LikesController {
     return await this.likeService.findAll();
   }
 
+  @Get('user')
+  async findByUser(@Request() req) {
+    // get all posts in the db
+    return await this.likeService.findByUser(req.user.id);
+  }
+
   @Post()
   async create(@Body() like: LikeDto, @Request() req): Promise<LikeEntity> {
     // create a new post and return the newly created post
