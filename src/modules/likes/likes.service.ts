@@ -68,6 +68,7 @@ export class LikesService {
   async findByUser(userId): Promise<Like[]> {
     return await this.likeRepository.findAll<Like>({
       where: { userId },
+      order: [['id', 'DESC']],
       include: [{ model: Post, include: [{ model: User }, { model: Like }] }],
     });
   }
