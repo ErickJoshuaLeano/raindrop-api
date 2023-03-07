@@ -34,6 +34,18 @@ export class User extends Model<User> {
 
   @Column({
     type: DataType.STRING,
+    allowNull: true, // resetToken can be null initially
+  })
+  resetToken: string;
+
+  @Column({
+    type: DataType.DATE,
+    allowNull: true, // resetTokenExpiration can be null initially
+  })
+  resetTokenExpiration: Date;
+
+  @Column({
+    type: DataType.STRING,
     allowNull: true,
   })
   profilePicture: string;
